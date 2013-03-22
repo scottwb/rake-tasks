@@ -14,6 +14,6 @@ Scott W. Bradley -- http://scottwb.com
 
 # License
 
-This code is licnesed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+This code is licensed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
 
