@@ -1,4 +1,4 @@
-COUCHBASE_VERSION   = "2.0.0"
+COUCHBASE_VERSION   = "2.1.1"
 COUCHBASE_SRC_URL   = "http://packages.couchbase.com/releases/#{COUCHBASE_VERSION}/couchbase-server-community_x86_64_#{COUCHBASE_VERSION}.zip"
 COUCHBASE_SRC_FILE  = COUCHBASE_SRC_URL.split('/').last
 COUCHBASE_BIN_PATH  = "/Applications/Couchbase Server.app"
