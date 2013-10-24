@@ -2,6 +2,7 @@ COUCHBASE_VERSION   = "2.1.1"
 COUCHBASE_SRC_URL   = "http://packages.couchbase.com/releases/#{COUCHBASE_VERSION}/couchbase-server-community_x86_64_#{COUCHBASE_VERSION}.zip"
 COUCHBASE_SRC_FILE  = COUCHBASE_SRC_URL.split('/').last
 COUCHBASE_BIN_PATH  = "/Applications/Couchbase Server.app"
+COUCHBASE_DATA_PATH = "#{ENV['HOME']}/Library/Application Support/Couchbase"
 
 namespace :couchbase do
   desc "Install Couchbase v#{COUCHBASE_VERSION}"
@@ -16,6 +17,14 @@ namespace :couchbase do
       rm "README.txt" # Unzipped from couchbase
       mv "Couchbase Server.app", COUCHBASE_BIN_PATH
     end
+  end
+
+  desc "Uninstall Couchbase and remove all its data"
+  task :uninstall do
+    puts "Removing Couchbase installation..."
+    rm_rf COUCHBASE_BIN_PATH
+    puts "Removing Couchbase data..."
+    rm_rf COUCHBASE_DATA_PATH
   end
 
   desc "Start Couchbase Server"
