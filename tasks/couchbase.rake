@@ -46,4 +46,38 @@ namespace :couchbase do
   task :console => :start do
     sh "open http://localhost:8091/"
   end
+
+  desc "Backs up the Couchbase data."
+  task :backup, [:username,:password] do |t, args|
+    username = args[:username]
+    password = args[:password]
+    timestamp = Time.now.utc.strftime("%Y%m%d%H%M%S")
+    dirname   = "#{timestamp}-couchbase"
+    mkdir dirname
+    puts "Backing up data..."
+    sh "\"#{COUCHBASE_BIN_PATH}/Contents/Resources/couchbase-core/bin/cbbackup\" http://127.0.0.1:8091 #{dirname} -u \"#{username}\" -p \"#{password}\""
+    puts "Archiving backup..."
+    sh "tar -cjvf #{dirname}.tar.bz2 #{dirname}"
+    puts "Removing temp files..."
+    rm_rf dirname
+    puts "Done."
+    puts
+    puts "Backed up Couchbase to: #{dirname}.tar.bz2"
+    puts
+  end
+
+  desc "Restore Couchbase data from backup. Requires all buckets to be already created."
+  task :restore, [:backup_filepath,:username,:password] do |t, args|
+    tarname = args[:backup_filepath]
+    username = args[:username]
+    password = args[:password]
+    dirname = File.basename(tarname).split('.').first
+    puts "Unpacking archive..."
+    sh "tar -jxvf #{tarname}"
+    puts "Restoring data..."
+    sh "\"#{COUCHBASE_BIN_PATH}/Contents/Resources/couchbase-core/bin/cbrestore\" -u \"#{username}\" -p \"#{password}\" #{dirname} couchbase://127.0.0.1:8091"
+    puts "Removing temp files..."
+    rm_rf dirname
+    puts "Done."
+  end
 end
