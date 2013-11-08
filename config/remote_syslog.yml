@@ -1,0 +1,9 @@
+---
+# List out all files/globs you want reported to papertrail.
+files:
+  - /Users/scottwb/src/rake-tasks/log/*.log
+
+# Configure using settings from your papertrail account.
+destination:
+  host: logs.papertrailapp.com
+  port: 12345
